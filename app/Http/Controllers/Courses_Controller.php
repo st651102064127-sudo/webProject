@@ -12,7 +12,7 @@ class Courses_Controller extends Controller
     {
         $data = Courses_Model::all();
 
-        return view('/Coures')->with('data', $data);
+        return view('Admin/Coures')->with('data', $data);
     }
 
 
