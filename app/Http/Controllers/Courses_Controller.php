@@ -11,7 +11,8 @@ class Courses_Controller extends Controller
     public function index()
     {
         $data = Courses_Model::all();
-        return view('Coures' )->with('data', $data);
+
+        return view('/Coures')->with('data', $data);
     }
 
 
@@ -40,8 +41,8 @@ class Courses_Controller extends Controller
         if ($req->hasFile('file')) {
             $file = $req->file('file');
             $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/Coures'), $filename);
-            $path = 'uploads/Coures' . $filename;
+            $file->move(public_path('uploads/Coures/'), $filename);
+            $path = 'uploads/Coures/' . $filename;
         }
 
         Courses_Model::create([
@@ -55,5 +56,48 @@ class Courses_Controller extends Controller
 
         return redirect()->route('Courses.Index')->with('success', 'เพิ่มข้อมูลสำเร็จ');
 
+
+
+    }
+    public function update(Request $req, $id)
+    {
+        $validator = Validator::make($req->all(), [
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'file' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $validator->validate();
+
+        $course = Courses_Model::findOrFail($id);
+
+        $course->title = $req->title;
+        $course->description = $req->description;
+        $course->price = $req->price;
+
+        if ($req->hasFile('file')) {
+            if ($course->image && file_exists(public_path($course->image))) {
+                unlink(public_path($course->image));
+            }
+            $file = $req->file('file');
+            $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/Courses/'), $filename);
+            $course->image = 'uploads/Courses/' . $filename;
+        }
+
+        $course->save();
+
+        return redirect()->route('Courses.Index')->with('success', 'แก้ไขข้อมูลสำเร็จ');
+    }
+
+    public function destroy($id)
+    {
+        $course = Courses_Model::findOrFail($id);
+        if ($course->image && file_exists(public_path($course->image))) {
+            unlink(public_path($course->image));
+        }
+        $course->delete();
+        return response()->json(['success' => true]);
     }
 }
