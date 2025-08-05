@@ -31,41 +31,56 @@
                                     <label for="name" class="form-label">ชื่อ-สกุล</label>
                                     <input type="text" class="form-control @error('fullname') is-invalid @enderror"
                                         name="fullname" id="name" value="{{ old('fullname') }}" required>
-                                    @error('fullname') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    @error('fullname')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label for="email" class="form-label">อีเมล</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
                                         name="email" id="email" value="{{ old('email') }}" required>
-                                    @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    @error('email')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label for="tel" class="form-label">เบอร์โทรศัพท์</label>
                                     <input type="tel" class="form-control @error('tel') is-invalid @enderror"
-                                        name="tel" id="tel" value="{{ old('tel') }}" required maxlength="10">
-                                    @error('tel') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                        name="tel" id="tel" value="{{ old('tel') }}" required
+                                        maxlength="10">
+                                    @error('tel')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Username</label>
                                     <input type="text" class="form-control @error('username') is-invalid @enderror"
                                         name="username" id="username" value="{{ old('username') }}" required>
-                                    @error('username') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    @error('username')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Password</label>
                                     <input type="password" class="form-control @error('password') is-invalid @enderror"
                                         name="password" id="password" required>
-                                    @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    @error('password')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label for="status" class="form-label">สถานะ</label>
                                     <select class="form-select @error('status') is-invalid @enderror" name="status"
                                         id="status" required>
                                         <option value="" disabled selected>ตำแหน่ง</option>
-                                        <option value="Admin" {{ old('status') == 'Admin' ? 'selected' : '' }}>Admin</option>
-                                        <option value="User" {{ old('status') == 'User' ? 'selected' : '' }}>User</option>
+                                        <option value="Admin" {{ old('status') == 'Admin' ? 'selected' : '' }}>Admin
+                                        </option>
+                                        <option value="User" {{ old('status') == 'User' ? 'selected' : '' }}>User
+                                        </option>
                                     </select>
-                                    @error('status') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    @error('status')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <button type="submit" class="btn btn-primary w-100">เพิ่มข้อมูล</button>
                             </div>
@@ -99,18 +114,24 @@
                                                 <td>{{ $user->email }}</td>
                                                 <td>{{ $user->created_at }}</td>
                                                 <td>
-                                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal-{{ $user->uuid }}">
+                                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                        data-bs-target="#editModal-{{ $user->uuid }}">
                                                         แก้ไข
                                                     </button>
-                                                    <form method="POST"  class="d-inline">
-                                                        @csrf @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('ยืนยันการลบ?')">ลบ</button>
+                                                    <form method="POST"
+                                                        action="{{ route('Employee.Destroy', $user->uuid) }}"
+                                                        class="d-inline delete-form">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button"
+                                                            class="btn btn-danger btn-sm delete-btn">ลบ</button>
                                                     </form>
                                                 </td>
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="5" class="text-center text-muted py-4">ไม่มีข้อมูลพนักงาน</td>
+                                                <td colspan="5" class="text-center text-muted py-4">
+                                                    ไม่มีข้อมูลพนักงาน</td>
                                             </tr>
                                         @endforelse
                                     </tbody>
@@ -122,33 +143,39 @@
 
                 <!-- Modals -->
                 @foreach ($users as $user)
-                    <div class="modal fade" id="editModal-{{ $user->uuid }}" tabindex="-1" aria-labelledby="editModalLabel-{{ $user->uuid }}" aria-hidden="true">
+                    <div class="modal fade" id="editModal-{{ $user->uuid }}" tabindex="-1"
+                        aria-labelledby="editModalLabel-{{ $user->uuid }}" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form method="POST" action="{{ route('Employee.Update', $user->uuid) }}">
                                     @csrf
                                     @method('PUT')
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="editModalLabel-{{ $user->uuid }}">แก้ไขข้อมูลพนักงาน</h5>
+                                        <h5 class="modal-title" id="editModalLabel-{{ $user->uuid }}">
+                                            แก้ไขข้อมูลพนักงาน</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
                                         <input type="hidden" name="uuid" value="{{ $user->uuid }}">
                                         <div class="mb-3">
                                             <label class="form-label">ชื่อ-สกุล</label>
-                                            <input type="text" class="form-control" name="fullname" value="{{ $user->fullname }}" required>
+                                            <input type="text" class="form-control" name="fullname"
+                                                value="{{ $user->fullname }}" required>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">อีเมล</label>
-                                            <input type="email" class="form-control" name="email" value="{{ $user->email }}" required>
+                                            <input type="email" class="form-control" name="email"
+                                                value="{{ $user->email }}" required>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">เบอร์โทรศัพท์</label>
-                                            <input type="tel" class="form-control" name="tel" value="{{ $user->tel }}" required>
+                                            <input type="tel" class="form-control" name="tel"
+                                                value="{{ $user->tel }}" required>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Username</label>
-                                            <input type="text" class="form-control" name="username" value="{{ $user->username }}" required>
+                                            <input type="text" class="form-control" name="username"
+                                                value="{{ $user->username }}" required>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Password (ถ้าไม่แก้ไข ให้เว้นว่าง)</label>
@@ -157,14 +184,17 @@
                                         <div class="mb-3">
                                             <label class="form-label">สถานะ</label>
                                             <select class="form-select" name="status" required>
-                                                <option value="Admin" {{ $user->status == 'Admin' ? 'selected' : '' }}>Admin</option>
-                                                <option value="User" {{ $user->status == 'User' ? 'selected' : '' }}>User</option>
+                                                <option value="Admin"
+                                                    {{ $user->status == 'Admin' ? 'selected' : '' }}>Admin</option>
+                                                <option value="User"
+                                                    {{ $user->status == 'User' ? 'selected' : '' }}>User</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary">บันทึก</button>
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">ปิด</button>
                                     </div>
                                 </form>
                             </div>
@@ -212,6 +242,24 @@
             lengthMenu: [5, 10, 25, 50],
             responsive: true,
             ordering: true,
+        });
+        $(document).on('click', '.delete-btn', function(e) {
+            e.preventDefault();
+            let form = $(this).closest('form');
+            Swal.fire({
+                title: 'คุณแน่ใจหรือไม่?',
+                text: "ข้อมูลนี้จะถูกลบถาวร!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'ลบ',
+                cancelButtonText: 'ยกเลิก'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
         });
     </script>
 </body>

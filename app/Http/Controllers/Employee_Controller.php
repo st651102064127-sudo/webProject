@@ -81,4 +81,10 @@ class Employee_Controller extends Controller
 
         return redirect()->route('Employee.Index')->with('success', 'แก้ไขข้อมูลสำเร็จ');
     }
+    public function destroy($uuid)
+{
+    $user = Employee_Model::where('uuid', $uuid)->firstOrFail();
+    $user->delete();
+    return redirect()->route('Employee.Index')->with('success', 'ลบข้อมูลสำเร็จ');
+}
 }

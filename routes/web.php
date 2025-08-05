@@ -14,4 +14,5 @@ Route::delete('/courses/{id}', [Courses_Controller::class, 'destroy'])->name('Co
 Route::get('/Employee', [Employee_Controller::class, 'index'])->name('Employee.Index');
 Route::post('/Employee/store', [Employee_Controller::class, 'store'])->name('Employee.Store');
 Route::put('/Employee/update/{id}', [Employee_Controller::class, 'update'])->name('Employee.Update');
+Route::delete('/Employee/{uuid}', [Employee_Controller::class, 'destroy'])->name('Employee.Destroy');
 
