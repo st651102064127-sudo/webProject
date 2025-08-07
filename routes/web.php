@@ -8,7 +8,7 @@ use App\Http\Controllers\Registration_Controller;
 use App\Http\Controllers\Login_Controller;
 use App\Http\Controllers\Register_Controller;
 use App\Http\Middleware\AuthSession;
-
+use App\Http\Controllers\ForgotPassword_Controller;
 Route::middleware(AuthSession::class)->group(function () {
     Route::get('/courses', [Courses_Controller::class, 'index'])->name('Courses.Index');
     Route::post('/courses/Store', [Courses_Controller::class, 'Store'])->name('Course.Store');
@@ -46,3 +46,10 @@ Route::post('/logout', function () {
     session()->flush(); // ล้าง session ด้วย
     return redirect('/login');
 })->name('logout');
+
+
+Route::get('Forgotpassword', function () {
+    return view('User.Forgot_password');
+})->name('Forgot_password');
+
+Route::post('/forgot-password', [ForgotPassword_Controller::class, 'resetPassword'])->name('User.Forgot.Submit');

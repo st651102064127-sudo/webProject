@@ -53,7 +53,7 @@
                 </div>
                 <div class="forgot-password">
                     <br>
-                    <a href="Forgot password.php">ลืมรหัสผ่าน?</a>
+                    <a href="{{route('Forgot_password')}}">ลืมรหัสผ่าน?</a>
                 </div>
             </div>
 
