@@ -1,0 +1,74 @@
+[33mcommit 56dec7af346973b88e637d7669d68b63f30391b5[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mv2[m[33m, [m[1;31morigin/v2[m[33m, [m[1;32mCourse_Version_2[m[33m)[m
+Author: st651102064127-sudo <st651102064127@pcru.ac.th>
+Date:   Fri Aug 8 00:04:02 2025 +0700
+
+    register login logout .Darkmode in Admin. ForgotPassword .Wait frontend for create relation register courses. ❤❤❤
+
+[33mcommit f29d23ec59079d44e9c6175064579141ef4da437[m
+Author: st651102064127-sudo <st651102064127@pcru.ac.th>
+Date:   Thu Aug 7 23:46:30 2025 +0700
+
+    login regiser ...
+
+[33mcommit ef829bf2d8a74bf7a5a74f716cd62ece18d9ff42[m
+Author: huggies2003 <156408665+huggies2003@users.noreply.github.com>
+Date:   Thu Aug 7 18:25:37 2025 +0700
+
+    Add files via upload
+
+[33mcommit b5c742eb67e300d364df41a9093c014d00fd61d4[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: huggies2003 <156408665+huggies2003@users.noreply.github.com>
+Date:   Thu Aug 7 18:04:57 2025 +0700
+
+    Create Frontend_course
+    
+    v2
+
+[33mcommit 477248c0811f790a07547f24fe66d3ae67bd4bfe[m
+Author: st651102064127-sudo <st651102064127@pcru.ac.th>
+Date:   Wed Aug 6 15:39:05 2025 +0700
+
+    DashBoard_Register_6_8_68
+
+[33mcommit 372ede952113557e302ab07ee9195b18aaccba48[m
+Author: st651102064127-sudo <st651102064127@pcru.ac.th>
+Date:   Wed Aug 6 00:28:40 2025 +0700
+
+    Add all files to the project
+
+[33mcommit 75023d83c608583aa432fdb129cc25d736854b0d[m
+Author: st651102064127-sudo <st651102064127@pcru.ac.th>
+Date:   Wed Aug 6 00:14:58 2025 +0700
+
+    Add all files to the project
+
+[33mcommit 981133f84a23126263d01be340e25fcc55f7b7ae[m
+Author: st651102064127-sudo <st651102064127@pcru.ac.th>
+Date:   Tue Aug 5 19:35:03 2025 +0700
+
+    Add all files to the project
+
+[33mcommit 494437b7d8b13be39a1b0a35a35dea3160f0a120[m
+Author: st651102064127-sudo <st651102064127@pcru.ac.th>
+Date:   Tue Aug 5 17:17:41 2025 +0700
+
+    Add all files to the project
+
+[33mcommit f3793327d5f866d4d0baad78e1264c0de27f46c0[m
+Merge: ebcc812 4b293b4
+Author: st651102064127-sudo <st651102064127@pcru.ac.th>
+Date:   Tue Aug 5 17:05:52 2025 +0700
+
+    Resolve merge conflict in README.md
+
+[33mcommit ebcc81295bb28f5f305e2b698f5bbec109eae41a[m
+Author: st651102064127-sudo <st651102064127@pcru.ac.th>
+Date:   Tue Aug 5 16:56:52 2025 +0700
+
+    V1
+
+[33mcommit 4b293b4844496853a4a29552c14ee9fdc5fca677[m
+Author: st651102064127-sudo <st651102064127@pcru.ac.th>
+Date:   Tue Aug 5 16:45:31 2025 +0700
+
+    Initial commit
