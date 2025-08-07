@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,153 +8,39 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <style>
-        :root {
-            --bg-primary: #121212;
-            --bg-secondary: #1e1e1e;
-            --bg-card: #2a2a2a;
-            --text-primary: #ffffff;
-            --text-secondary: #b3b3b3;
-            --accent: #007bff;
-            --success: #28a745;
-            --warning: #ffc107;
-            --danger: #dc3545;
-            --border: #404040;
-        }
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-
-        .navbar {
-            background-color: var(--bg-secondary) !important;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .card-header {
-            background-color: var(--bg-secondary);
-            border-bottom: 1px solid var(--border);
-            color: var(--text-primary);
-        }
-
-        .stat-card {
-            transition: transform 0.2s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .table-dark {
-            --bs-table-bg: var(--bg-card);
-            --bs-table-border-color: var(--border);
-        }
-
-        .btn-primary {
-            background-color: var(--accent);
-            border-color: var(--accent);
-        }
-
-        .progress {
-            background-color: var(--bg-secondary);
-        }
-
-        .status-badge {
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.375rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .status-active { background-color: var(--success); }
-        .status-inactive { background-color: var(--text-secondary); }
-        .status-paid { background-color: var(--success); }
-        .status-pending { background-color: var(--warning); color: #000; }
-        .status-canceled { background-color: var(--danger); }
-
-        .chart-container {
-            position: relative;
-            height: 300px;
-        }
-
-        .sidebar {
-            background-color: var(--bg-secondary);
-            min-height: 100vh;
-            border-right: 1px solid var(--border);
-        }
-
-        .nav-link {
-            color: var(--text-secondary);
-            padding: 0.75rem 1rem;
-            border-radius: 0.375rem;
-            margin: 0.125rem 0;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            background-color: var(--bg-card);
-            color: var(--text-primary);
-        }
-
-        .metric-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .icon-primary { background-color: rgba(0, 123, 255, 0.2); color: var(--accent); }
-        .icon-success { background-color: rgba(40, 167, 69, 0.2); color: var(--success); }
-        .icon-warning { background-color: rgba(255, 193, 7, 0.2); color: var(--warning); }
-        .icon-danger { background-color: rgba(220, 53, 69, 0.2); color: var(--danger); }
-
-        span,strong{
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        h6{
-            color: white;
-            font-size: 1rem;
-            margin-bottom: 0.25rem;
-        }
-        .text-muted{
-            color:  white;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/dashborad.css') }}">
 </head>
+
 <body>
+
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark h-100">
         <div class="container-fluid">
             <a class="navbar-brand fw-bold" href="#">
                 <i class="fas fa-graduation-cap me-2"></i>Course Dashboard
             </a>
-            <div class="navbar-nav ms-auto">
-                <span class="nav-item nav-link">
-                    <i class="fas fa-user me-1"></i>Admin
-                </span>
-            </div>
+
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user me-1"></i>
+                        {{ session('user_fullname') ?? 'Guest' }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </nav>
 
@@ -161,23 +48,29 @@
         <div class="row">
             <!-- Sidebar -->
             <div class="col-md-2 p-0">
-                <div class="sidebar p-3">
+                <div class="sidebar p-3 bg-dark vh-100">
                     <nav class="nav flex-column">
-                        <a class="nav-link active" href="#overview">
-                            <i class="fas fa-chart-pie me-2"></i>ภาพรวม
+                        <a class="nav-link active text-white" href="{{ route('Admin.Dashboard') }}">
+                            <i class="fas fa-home me-2"></i> Home
                         </a>
-                        <a class="nav-link" href="#users">
-                            <i class="fas fa-users me-2"></i>ผู้ใช้งาน
+                        <a class="nav-link text-white" href="{{ route('Employee.Index') }}">
+                            <i class="fas fa-user me-2"></i> Employee
                         </a>
-                        <a class="nav-link" href="#courses">
-                            <i class="fas fa-book me-2"></i>คอร์ส
+                        <a class="nav-link text-white" href="{{ route('Courses.Index') }}">
+                            <i class="fas fa-book me-2"></i> Courses
                         </a>
-                        <a class="nav-link" href="#registrations">
-                            <i class="fas fa-clipboard-list me-2"></i>การลงทะเบียน
+                        <a class="nav-link text-white" href="{{ route('registrations.index') }}">
+                            <i class="fas fa-clipboard-list me-2"></i> Registrations
                         </a>
+
+                        <!-- ปุ่ม Toggle ธีม -->
+
+                        <!-- User info dropdown (ถ้าต้องการ) -->
+
                     </nav>
                 </div>
             </div>
+
 
             <!-- Main Content -->
             <div class="col-md-10 p-4">
@@ -646,4 +539,5 @@
         });
     </script>
 </body>
+
 </html>

@@ -11,11 +11,12 @@
     <link rel="stylesheet" href="//cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css">
     <script src="//cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="{{ asset('css/dark-mode.css') }}">
 </head>
 
 <body>
     <div class="">
-        @include('admin.layout.navbar')
+@include('Admin.layout.Navbar')
         <div class="container-fluid">
             <div class="row mt-3">
                 <!-- แบบฟอร์มเพิ่มข้อมูล -->
@@ -43,23 +44,7 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="mb-3">
-                                    <label for="tel" class="form-label">เบอร์โทรศัพท์</label>
-                                    <input type="tel" class="form-control @error('tel') is-invalid @enderror"
-                                        name="tel" id="tel" value="{{ old('tel') }}" required
-                                        maxlength="10">
-                                    @error('tel')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="username" class="form-label">Username</label>
-                                    <input type="text" class="form-control @error('username') is-invalid @enderror"
-                                        name="username" id="username" value="{{ old('username') }}" required>
-                                    @error('username')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
+
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Password</label>
                                     <input type="password" class="form-control @error('password') is-invalid @enderror"
@@ -167,16 +152,8 @@
                                             <input type="email" class="form-control" name="email"
                                                 value="{{ $user->email }}" required>
                                         </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">เบอร์โทรศัพท์</label>
-                                            <input type="tel" class="form-control" name="tel"
-                                                value="{{ $user->tel }}" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Username</label>
-                                            <input type="text" class="form-control" name="username"
-                                                value="{{ $user->username }}" required>
-                                        </div>
+
+
                                         <div class="mb-3">
                                             <label class="form-label">Password (ถ้าไม่แก้ไข ให้เว้นว่าง)</label>
                                             <input type="password" class="form-control" name="password">
@@ -204,6 +181,8 @@
             </div>
         </div>
     </div>
+@include('Admin.layout.footer')
+
 
     <!-- SweetAlert -->
     @if (session('success'))
@@ -262,6 +241,7 @@
             });
         });
     </script>
+
 </body>
 
 </html>
