@@ -70,10 +70,10 @@ class Login_Controller extends Controller
         session()->put('user_status', $user->status);
 
 
-        if($user->status == "Admin"){
-                    return redirect()->route('Admin.Dashboard')->with('success', 'เข้าสู่ระบบสำเร็จ');
-        }else{
-            dd('รอการพัฒนาเพิ่มเติมสำหรับผู้ใช้ทั่วไป');
+        if ($user->status == "Admin") {
+            return redirect()->route('Admin.Dashboard')->with('success', 'เข้าสู่ระบบสำเร็จ');
+        } else {
+            return redirect()->route('index')->with('success', 'เข้าสู่ระสำเร็จ');
         }
     }
 }

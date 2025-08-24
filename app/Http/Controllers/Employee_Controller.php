@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Employee_Model;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Login_Model;
+use App\Models\Registration_Model;
+
 class Employee_Controller extends Controller
 {
     public function index()
@@ -42,6 +46,12 @@ class Employee_Controller extends Controller
 
 
         ]);
+        Login_Model::create([
+            'email_account' => $request->email,
+            'password_account' => Hash::make($request->password),
+            'login_count_account' => 0,
+            'lock_account' => false,
+        ]);
         return redirect()->route('Employee.Index')->with('success', 'เพิ่มสมาชิกสำเร็จ');
     }
     public function update(Request $request, $id)
@@ -50,19 +60,16 @@ class Employee_Controller extends Controller
         $user = Employee_Model::findOrFail($id);
         $request->validate([
             'fullname' => 'required|unique:users,fullname,' . $id . ',uuid',
-            'email' => 'required|email|unique:users,email,' . $id . ',uuid',
             'status' => 'required',
         ], [
             'fullname.required' => 'กรุณากรอกชื่อ',
             'fullname.unique' => 'ชื่อ-นามสกุลนี้ถูกใช้งานแล้ว',
-            'email.required' => 'กรุณากรอกอีเมล',
-            'email.email' => 'รูปแบบอีเมลไม่ถูกต้อง',
+
             'status.required' => 'กรุณาเลือกสถานะ',
 
         ]);
 
         $user->fullname = $request->fullname;
-        $user->email = $request->email;
         $user->status = $request->status;
 
         if ($request->filled('password')) {
@@ -74,9 +81,20 @@ class Employee_Controller extends Controller
         return redirect()->route('Employee.Index')->with('success', 'แก้ไขข้อมูลสำเร็จ');
     }
     public function destroy($uuid)
-{
-    $user = Employee_Model::where('uuid', $uuid)->firstOrFail();
-    $user->delete();
-    return redirect()->route('Employee.Index')->with('success', 'ลบข้อมูลสำเร็จ');
-}
+    {
+        $user = Employee_Model::where('uuid', $uuid)->firstOrFail();
+
+        if ($user->email) {
+            $login = Login_Model::where('email_account', $user->email)->first();
+
+            // ตรวจสอบว่าพบข้อมูลหรือไม่ก่อนที่จะสั่งลบ
+            if ($login) {
+                $login->delete();
+            }
+        }
+
+        $user->delete();
+
+        return redirect()->route('Employee.Index')->with('success', 'ลบข้อมูลสำเร็จ');
+    }
 }
