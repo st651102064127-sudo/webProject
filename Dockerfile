@@ -1,38 +1,29 @@
-# ใช้ PHP 8.2 พร้อม FPM
-FROM php:8.2-fpm
+# ใช้ PHP 8.2 CLI
+FROM php:8.2-cli
 
 # Set working directory
 WORKDIR /var/www/html
 
-# Install system dependencies
+# ติดตั้ง PHP extensions ที่จำเป็น
 RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    zip \
-    unzip \
-    npm \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    git unzip libzip-dev zip \
+    && docker-php-ext-install pdo pdo_mysql zip
 
-# Install PHP extensions
-RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
+# ติดตั้ง Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Install Composer
-COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
-
-# Copy existing application
+# Copy project
 COPY . .
 
-# Install PHP dependencies
+# ติดตั้ง dependencies Laravel
 RUN composer install --no-dev --optimize-autoloader
 
-# Set permissions for Laravel
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Set permissions สำหรับ storage
+RUN chown -R www-data:www-data /var/www/html/storage \
+    && chmod -R 755 /var/www/html/storage
 
-# Expose port
-EXPOSE 9000
+# เปิด port ที่ Render จะ detect
+EXPOSE 8080
 
-# Run PHP-FPM
-CMD ["php-fpm"]
+# Command รัน Laravel
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
