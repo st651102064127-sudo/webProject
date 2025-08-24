@@ -1,33 +1,29 @@
-# Base image PHP 8.2 FPM
-FROM php:8.2-fpm
+# ใช้ PHP 8.2 CLI
+FROM php:8.2-cli
 
 # Set working directory
 WORKDIR /var/www/html
 
-# Install system dependencies
+# ติดตั้ง dependencies ที่จำเป็น
 RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    zip \
-    libzip-dev \
-    libonig-dev \
-    curl \
-    && docker-php-ext-install pdo_mysql mbstring zip bcmath
+    git unzip libzip-dev zip libonig-dev libxml2-dev \
+    && docker-php-ext-install pdo pdo_mysql zip mbstring bcmath
 
-# Install Composer
-COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
+# ติดตั้ง Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Copy project files
+# Copy project
 COPY . .
 
-# Install Laravel dependencies
-RUN composer install --no-dev --optimize-autoloader
+# ตั้ง permission ให้ storage และ vendor
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/vendor || true \
+    && chmod -R 755 /var/www/html/storage /var/www/html/vendor || true
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# ติดตั้ง dependencies Laravel แบบ verbose เพื่อดู error
+RUN composer install --no-dev --optimize-autoloader -vvv
 
-# Expose port 8000
-EXPOSE 8000
+# เปิด port สำหรับ Laravel Serve
+EXPOSE 8080
 
-# Run Laravel server
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+# Command รัน Laravel
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
